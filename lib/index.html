@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Комплексные задания на JavaScript</title>
+    <style>
+        .result, .age-result, .leap-year-result, .letter-result {
+            background-color: yellow;
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Форма для ввода данных пользователя -->
+    <h2>Форма для ввода данных пользователя</h2>
+    <form id="userDataForm">
+        <label for="firstname">Имя:</label>
+        <input type="text" id="firstname" name="firstname"><br>
+        <label for="lastname">Фамилия:</label>
+        <input type="text" id="lastname" name="lastname"><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br>
+        <label for="comment">Комментарий:</label>
+        <textarea id="comment" name="comment"></textarea><br>
+        <button type="button" onclick="displayGreeting()">Отправить</button>
+    </form>
+    <div id="result" class="result"></div>
+
+    <!-- Форма для ввода даты рождения -->
+    <h2>Форма для ввода даты рождения</h2>
+    <label for="birthdate">Дата рождения:</label>
+    <input type="date" id="birthdate" name="birthdate">
+    <button type="button" onclick="calculateAge()">Вычислить возраст</button>
+    <div id="ageResult" class="age-result"></div>
+
+    <!-- Форма для проверки високосного года -->
+    <h2>Форма для проверки високосного года</h2>
+    <label for="leapYear">Год:</label>
+    <input type="number" id="leapYear" name="leapYear">
+    <button type="button" onclick="checkLeapYear()">Проверить год</button>
+    <div id="leapYearResult" class="leap-year-result"></div>
+
+    <!-- Форма для выбора буквы -->
+    <h2>Форма для выбора буквы</h2>
+    <select id="letterChoice">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+    </select>
+    <button type="button" onclick="showLetterChoice()">Показать выбор</button>
+    <div id="letterChoiceResult" class="letter-result"></div>
+
+    <script>
+        function displayGreeting() {
+            const firstname = document.getElementById("firstname").value;
+            const lastname = document.getElementById("lastname").value;
+            const email = document.getElementById("email").value;
+            const comment = document.getElementById("comment").value;
+
+            const greeting = `Привет, ${firstname} ${lastname}!`;
+            alert(greeting);
+
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = `
+                <p>Ваше имя: ${firstname}</p>
+                <p>Ваша фамилия: ${lastname}</p>
+                <p>Ваш e-mail: ${email}</p>
+                <p>Комментарий: ${comment}</p>
+                <p>${greeting}</p>
+            `;
+        }
+
+        function calculateAge() {
+            const birthdate = new Date(document.getElementById("birthdate").value);
+            const today = new Date();
+            const age = today.getFullYear() - birthdate.getFullYear();
+            const m = today.getMonth() - birthdate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthdate.getDate())) {
+                age--;
+            }
+            document.getElementById("ageResult").innerText = `Ваш возраст: ${age}`;
+        }
+
+        function checkLeapYear() {
+            const year = parseInt(document.getElementById("leapYear").value, 10);
+            const isLeap = (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
+            document.getElementById("leapYearResult").innerText = isLeap 
+                ? `${year} является високосным годом.` 
+                : `${year} не является високосным годом.`;
+        }
+
+        function showLetterChoice() {
+            const letter = document.getElementById("letterChoice").value;
+            document.getElementById("letterChoiceResult").innerText = `Вы выбрали букву: ${letter}`;
+        }
+    </script>
+</body>
+</html>
